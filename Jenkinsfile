@@ -1,8 +1,7 @@
 pipeline {
     agent {
         docker {
-            //image 'node:18-alpine'
-            image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
+            image 'node:22-alpine'
             reuseNode true
         }
     }
@@ -39,6 +38,9 @@ pipeline {
         stage('E2E') {
             steps {
                 sh '''
+                    echo 'Installing Playwright browsers...'
+                    npx playwright install --with-deps
+                    
                     echo 'Starting HTTP server...'
                     ./node_modules/.bin/serve -s build -l 3000 > /dev/null 2>&1 &
                     SERVER_PID=$!
