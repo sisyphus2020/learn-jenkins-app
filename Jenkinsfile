@@ -1,7 +1,8 @@
 pipeline {
     agent {
         docker {
-            image 'node:18-alpine'
+            //image 'node:18-alpine'
+            image 'mcr.microsoft.com/playwright:v1.35.0-focal'
             reuseNode true
         }
     }
@@ -34,6 +35,17 @@ pipeline {
                     npm test -- --coverage --watchAll=false
                 '''
             }
+        }
+
+        stage('E2E') {
+            steps {
+                sh '''
+                    npm install -g serve
+                    serve -s build
+                    
+                    npx playwright test
+                '''
+            }   
         }
     }
 
