@@ -40,7 +40,7 @@ pipeline {
         stage('E2E') {
             steps {
                 sh '''
-                    npm install -g serve
+                    npm install serve
                     serve -s build
                     
                     npx playwright test
