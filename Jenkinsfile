@@ -24,11 +24,15 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''
-                    echo 'Test stage'
+                    echo 'Verifying build artifacts...'
                     test -f ./build/index.html || (echo "ERROR: build/index.html not found" && exit 1)
-                    npm test
+                    echo '✓ build/index.html exists'
                 '''
                 
+                sh '''
+                    echo 'Running Jest unit tests...'
+                    npm test -- --coverage --watchAll=false
+                '''
             }
         }
     }
