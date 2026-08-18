@@ -26,6 +26,7 @@ pipeline {
                 sh '''
                     echo 'Test stage'
                     test -f ./build/index.html || (echo "ERROR: build/index.html not found" && exit 1)
+                    npm test
                 '''
                 
             }
