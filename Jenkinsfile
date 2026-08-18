@@ -39,10 +39,19 @@ pipeline {
         stage('E2E') {
             steps {
                 sh '''
-                    npm install serve
-                    ./node_modules/.bin/serve -s build
+                    echo 'Starting HTTP server...'
+                    ./node_modules/.bin/serve -s build -l 3000 > /dev/null 2>&1 &
+                    SERVER_PID=$!
+                    sleep 3
                     
+                    echo 'Running Playwright E2E tests...'
                     npx playwright test
+                    TEST_RESULT=$?
+                    
+                    echo 'Stopping server...'
+                    kill $SERVER_PID 2>/dev/null || true
+                    
+                    exit $TEST_RESULT
                 '''
             }   
         }
