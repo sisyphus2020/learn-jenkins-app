@@ -24,8 +24,8 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''
-                    echo 'Test atage'
-                    test -f bulid/index.html || (echo "ERROR: build/index.html not found" && exit 1)
+                    echo 'Test stage'
+                    test -f ./build/index.html || (echo "ERROR: build/index.html not found" && exit 1)
                 '''
                 
             }
