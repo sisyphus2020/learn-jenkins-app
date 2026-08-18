@@ -45,7 +45,7 @@ pipeline {
                     sleep 3
                     
                     echo 'Running Playwright E2E tests...'
-                    npx playwright test
+                    npx playwright test --reporter=html
                     TEST_RESULT=$?
                     
                     echo 'Stopping server...'
